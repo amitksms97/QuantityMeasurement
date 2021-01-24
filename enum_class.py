@@ -9,6 +9,9 @@ class Length(enum.Enum):
     GALLON = 3.78
     LITRE = 1
     ML = 0.001
+    KG = 1
+    TONNE = 1000
+    GM = 0.001
 
     def convert(self, length):
         return self.unit * length
@@ -23,3 +26,12 @@ class Volume(enum.Enum):
         return self.unit * volume
 '''''
 
+'''''
+class Weight(enum.Enum):
+    KG = 1
+    TONNE = 1000
+    GM = 0.001
+
+    def convert(self, weight):
+        return self.unit * weight
+'''''
