@@ -1,1 +1,3 @@
-print("Welcome to Quantity Measurement Program")
+if __name__ == 'main':
+    print("Welcome to Quantity Measurement Program")
+
