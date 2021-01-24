@@ -12,9 +12,12 @@ class Length(enum.Enum):
     KG = 1
     TONNE = 1000
     GM = 0.001
+    Fr = 1
+    Cel = 212/100
 
     def convert(self, length):
         return self.unit * length
+
 
 '''''
 class Volume(enum.Enum):
@@ -34,4 +37,13 @@ class Weight(enum.Enum):
 
     def convert(self, weight):
         return self.unit * weight
+'''''
+
+'''''
+class Temperature(enum.Enum):
+    F = 1
+    C = 212/100
+
+    def convert(self, temperature):
+        return self.unit * temperature
 '''''
