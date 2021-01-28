@@ -1,15 +1,43 @@
 import pytest
 from converter import QuantityMeasurement
 from enum_class import Length
-from feet import Feet
+from units.feet import Feet
+
+# case1 : comparing two different value
+@pytest.mark.parametrize("first_length, second_length,expected",
+                         [
+                             (QuantityMeasurement(Length.FEET, 3.0), QuantityMeasurement(Length.YARD, 1.0), True),
+                             (QuantityMeasurement(Length.FEET, 1.0), QuantityMeasurement(Length.YARD, 1.0), False),
+                             (QuantityMeasurement(Length.INCH, 1.0), QuantityMeasurement(Length.YARD, 1.0), False),
+                             (QuantityMeasurement(Length.INCH, 36.0), QuantityMeasurement(Length.YARD, 1.0), True),
+                             (QuantityMeasurement(Length.YARD, 1.0), QuantityMeasurement(Length.FEET, 3.0), True),
+                             (QuantityMeasurement(Length.YARD, 1.0), QuantityMeasurement(Length.INCH, 36.0), True),
+                             (QuantityMeasurement(Length.INCH, 2.0), QuantityMeasurement(Length.CM, 5.0), True),
+
+                             (QuantityMeasurement(Length.KG, 1.0), QuantityMeasurement(Length.GM, 0.0001), True),
+                             (QuantityMeasurement(Length.TONNE, 1.0), QuantityMeasurement(Length.KG, 1000.0), True),
+                             (QuantityMeasurement(Length.TONNE, 1.0), QuantityMeasurement(Length.GM, 1000000), True),
+                             (QuantityMeasurement(Length.Fr, 1.0), QuantityMeasurement(Length.Cel, 2.12), True)
+                        ])
+def test_givenTwoLengthsUnitValue_WhenCompared_ShouldReturnExpected(first_length, second_length, expected):
+    QuantityMeasurement.__eq__(first_length, second_length)
 
 
-# case1 : comparing two feet value
+@pytest.mark.parametrize("first_length, second_length,expected",
+                         [
+                             (QuantityMeasurement(Length.INCH, 2.0), QuantityMeasurement(Length.INCH, 2.0), 4.0),
+                             (QuantityMeasurement(Length.FEET, 1.0), QuantityMeasurement(Length.INCH, 2.0), 14.0),
+                             (QuantityMeasurement(Length.FEET, 1.0), QuantityMeasurement(Length.FEET, 1.0), 24.0),
+                             (QuantityMeasurement(Length.INCH, 2.0), QuantityMeasurement(Length.CM, 2.5), 3.0),
+                         ])
+def test_givenTwoLengthsUnitValue_WhenAdd_ShouldReturnExpectedResult(first_length, second_length, expected):
+    assert QuantityMeasurement.addition(first_length, second_length) == expected
+
+
 def test_givenZeroFtandZeroFt_WhenCompared_ShouldReturnTrue():
     first_feet = QuantityMeasurement(Length.FEET, 2.0)
     second_feet = QuantityMeasurement(Length.FEET, 2.0)
     assert first_feet == second_feet
-
 
 # case2 : comparing Two instance feet variable
 def test_givenTwoFeetValueInstanceVariable_WhenCompared_ShouldReturnTrue():
@@ -162,10 +190,9 @@ def test_givenTwoInchAndFiveCMValue_WhenCompared_ShouldReturnTrue():
                              (QuantityMeasurement(Length.YARD, 1.0), QuantityMeasurement(Length.FEET, 3.0), True),
                              (QuantityMeasurement(Length.YARD, 1.0), QuantityMeasurement(Length.INCH, 36.0), True),
                              (QuantityMeasurement(Length.INCH, 2.0), QuantityMeasurement(Length.CM, 5.0), True)
-                         ])
-
+                        ])
 def test_givenTwoLengthsUnitValue_WhenCompared_ShouldReturnExpected(first_length, second_length, expected):
-    assert QuantityMeasurement.compareto(first_length, second_length) == expected
+    assert QuantityMeasurement.__eq__(first_length, second_length) == expected
 
 
 @pytest.mark.parametrize("first_length, second_length,expected",
@@ -177,4 +204,5 @@ def test_givenTwoLengthsUnitValue_WhenCompared_ShouldReturnExpected(first_length
                          ])
 def test_givenTwoLengthsUnitValue_WhenAdd_ShouldReturnExpectedResult(first_length, second_length, expected):
     assert QuantityMeasurement.addition(first_length, second_length) == expected
+
 '''''

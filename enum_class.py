@@ -6,18 +6,17 @@ class Length(enum.Enum):
     YARD = 36.0
     INCH = 1.0
     CM = 0.4
-    GALLON = 3.78
-    LITRE = 1
-    ML = 0.001
     KG = 1
     TONNE = 1000
     GM = 0.001
     Fr = 1
     Cel = 212/100
 
+    def __init__(self, unit):
+        self.unit = unit
+
     def convert(self, length):
         return self.unit * length
-
 
 '''''
 class Volume(enum.Enum):
